@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { NodeIcon } from '@/components/NodeIcon';
 
 export default function ProviderPage() {
   const { allExperiences } = useTripStore();
@@ -39,20 +40,7 @@ export default function ProviderPage() {
     avgRating: 4.6,
   };
 
-  const categoryEmoji: Record<string, string> = {
-    'food-walk': '🍛',
-    adventure: '🏄',
-    cultural: '🎭',
-    nature: '🌿',
-    nightlife: '🌙',
-    shopping: '🛍️',
-    wellness: '🧘',
-    workshop: '🎨',
-    photography: '📸',
-    'water-sports': '🏊',
-    heritage: '🏛️',
-    'local-cuisine': '🍳',
-  };
+
 
   return (
     <div className="min-h-screen bg-[var(--background)] bg-grid">
@@ -296,8 +284,8 @@ export default function ProviderPage() {
                     }}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-4xl">
-                    {categoryEmoji[exp.category] || '🎯'}
+                  <div className="w-full h-full flex items-center justify-center bg-slate-800">
+                    <NodeIcon typeOrIcon={exp.category} className="w-10 h-10 text-slate-400" />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -305,8 +293,8 @@ export default function ProviderPage() {
                   {exp.category}
                 </span>
                 {exp.isHidden && (
-                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-600 text-white shadow-xs">
-                    💎 Hidden Gem
+                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-600 text-white shadow-xs flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" /> Hidden Gem
                   </span>
                 )}
               </div>

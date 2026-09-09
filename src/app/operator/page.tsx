@@ -120,7 +120,7 @@ export default function OperatorPage() {
         provider: tour.trip.travelerName,
         status: tour.overallStatus === 'disrupted' ? 'disrupted' : 'confirmed',
         riskLevel: tour.overallStatus === 'disrupted' ? 'high' : tour.overallStatus === 'at-risk' ? 'medium' : 'low',
-        icon: tour.overallStatus === 'disrupted' ? '🚨' : tour.overallStatus === 'at-risk' ? '⚠️' : '📍',
+        icon: tour.overallStatus === 'disrupted' ? 'alert' : tour.overallStatus === 'at-risk' ? 'alert' : 'pin',
         isImpacted: tour.overallStatus === 'disrupted',
       };
     });
@@ -417,7 +417,7 @@ export default function OperatorPage() {
                         {/* Disruption alert */}
                         {tour.activeDisruptions.length > 0 && (
                           <div className="mt-2.5 p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-xs font-semibold text-red-600 dark:text-red-400 flex items-center gap-1.5">
-                            <span>⚠️</span>
+                            <AlertTriangle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
                             <span className="truncate">{tour.activeDisruptions[0].title}</span>
                           </div>
                         )}

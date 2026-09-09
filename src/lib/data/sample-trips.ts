@@ -35,7 +35,7 @@ const goaNodes: TripNode[] = [
     riskScore: 15,
     riskFactors: [],
     status: 'confirmed',
-    icon: '✈️',
+    icon: 'plane',
     image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600&auto=format&fit=crop',
     details: {
       flightNumber: '6E-2341',
@@ -63,7 +63,7 @@ const goaNodes: TripNode[] = [
     riskScore: 10,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🚕',
+    icon: 'car',
     image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=600&auto=format&fit=crop',
     details: {
       vehicleType: 'Sedan',
@@ -89,7 +89,7 @@ const goaNodes: TripNode[] = [
     riskScore: 5,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🏨',
+    icon: 'hotel',
     image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop',
     details: {
       hotelName: 'Taj Holiday Village',
@@ -118,7 +118,7 @@ const goaNodes: TripNode[] = [
     riskScore: 5,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🍽️',
+    icon: 'utensils',
     image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop',
     details: {
       cuisine: 'Goan Seafood',
@@ -144,7 +144,7 @@ const goaNodes: TripNode[] = [
     riskScore: 35,
     riskFactors: ['Weather dependent'],
     status: 'confirmed',
-    icon: '🚢',
+    icon: 'ship',
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop',
     details: {
       boatName: 'Shantadurga',
@@ -170,7 +170,7 @@ const goaNodes: TripNode[] = [
     riskScore: 8,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🍽️',
+    icon: 'utensils',
     image: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop',
     details: {
       cuisine: 'Greek-Mediterranean',
@@ -197,7 +197,7 @@ const goaNodes: TripNode[] = [
     riskScore: 45,
     riskFactors: ['Weather dependent', 'Tide conditions'],
     status: 'confirmed',
-    icon: '🤿',
+    icon: 'waves',
     image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=600&auto=format&fit=crop',
     details: {
       diveType: 'Beginner / Discovery Dive',
@@ -225,7 +225,7 @@ const goaNodes: TripNode[] = [
     riskScore: 10,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🌿',
+    icon: 'trees',
     image: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=600&auto=format&fit=crop',
     details: {
       includes: 'Guided tour, Spice tasting, Traditional lunch',
@@ -251,7 +251,7 @@ const goaNodes: TripNode[] = [
     riskScore: 12,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🎉',
+    icon: 'sparkles',
     image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
     details: {
       eventType: 'Beach Party',
@@ -278,7 +278,7 @@ const goaNodes: TripNode[] = [
     riskScore: 8,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🏛️',
+    icon: 'landmark',
     image: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=600&auto=format&fit=crop',
     details: {
       includes: 'Guided walking tour, Church visits, Historical commentary',
@@ -303,7 +303,7 @@ const goaNodes: TripNode[] = [
     riskScore: 2,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🏨',
+    icon: 'hotel',
     image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600&auto=format&fit=crop',
     details: {
       hotelName: 'Taj Holiday Village',
@@ -328,7 +328,7 @@ const goaNodes: TripNode[] = [
     riskScore: 10,
     riskFactors: [],
     status: 'confirmed',
-    icon: '🚕',
+    icon: 'car',
     image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=600&auto=format&fit=crop',
     details: {
       vehicleType: 'Sedan',
@@ -353,7 +353,7 @@ const goaNodes: TripNode[] = [
     riskScore: 18,
     riskFactors: [],
     status: 'confirmed',
-    icon: '✈️',
+    icon: 'plane',
     image: 'https://images.unsplash.com/photo-1540339832862-474599807836?q=80&w=600&auto=format&fit=crop',
     details: {
       flightNumber: '6E-2342',

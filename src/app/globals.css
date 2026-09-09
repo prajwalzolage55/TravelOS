@@ -131,30 +131,30 @@ body {
   box-shadow: 0 0 20px var(--glow-danger), 0 0 40px rgba(239, 68, 68, 0.08);
 }
 
-/* Gradient Text */
+/* Gradient Text - Refined Luxury Enterprise */
 .gradient-text {
-  background: linear-gradient(135deg, #4f46e5, #0d9488);
+  background: linear-gradient(135deg, #0f172a 20%, #1e40af 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .gradient-text {
-  background: linear-gradient(135deg, var(--primary-light), var(--accent));
+  background: linear-gradient(135deg, #f8fafc 20%, #93c5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-warm {
-  background: linear-gradient(135deg, #ea580c, #db2777, #7c3aed);
+  background: linear-gradient(135deg, #0f172a 10%, #334155 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .gradient-text-warm {
-  background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6);
+  background: linear-gradient(135deg, #ffffff 10%, #cbd5e1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -329,17 +329,19 @@ body {
   cursor: pointer;
 }
 
+/* High contrast map marker pill - ALWAYS ultra-legible on any satellite/street tile */
 .map-marker-pill {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 9999px;
   font-size: 11px;
   font-weight: 700;
-  border-width: 1.5px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background: #0f172a !important; /* Dark solid base eliminates map glare */
+  color: #ffffff !important;
+  border: 1.5px solid #334155 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
   white-space: nowrap;
   transition: all 0.2s ease;
 }
@@ -347,23 +349,31 @@ body {
 .map-marker-pill:hover,
 .marker-selected .map-marker-pill {
   transform: scale(1.08);
+  border-color: #60a5fa !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
 }
 
 .marker-icon {
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .marker-title {
-  max-width: 110px;
+  max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #f8fafc !important;
+  font-weight: 600;
+  font-size: 11px;
 }
 
 .marker-price {
-  color: #34d399;
+  color: #34d399 !important;
   font-weight: 800;
   font-size: 10px;
+  margin-left: 2px;
 }
 
 .marker-pointer {
@@ -385,35 +395,36 @@ body {
   }
 }
 
-/* Custom Leaflet Popup */
+/* Custom Leaflet Popup - Crisp High Contrast Card (No white-on-white text) */
 .custom-leaflet-popup .leaflet-popup-content-wrapper {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 0;
-  overflow: hidden;
-  color: #fff;
-  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.5);
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
 }
 
 .custom-leaflet-popup .leaflet-popup-content {
-  margin: 0;
-  line-height: 1.4;
+  margin: 0 !important;
+  line-height: 1.4 !important;
 }
 
 .custom-leaflet-popup .leaflet-popup-tip {
-  background: rgba(15, 23, 42, 0.95);
+  background: #ffffff !important;
 }
 
 .map-popup-card {
-  width: 260px;
+  width: 270px;
+  background: #ffffff !important;
 }
 
 .map-popup-img {
   width: 100%;
   height: 120px;
   overflow: hidden;
+  background: #0f172a;
 }
 
 .map-popup-img img {
@@ -423,65 +434,102 @@ body {
 }
 
 .map-popup-body {
-  padding: 12px;
+  padding: 14px;
 }
 
 .map-popup-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .map-popup-type {
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 9px !important;
+  font-weight: 800 !important;
   letter-spacing: 0.05em;
-  padding: 2px 6px;
+  padding: 2px 8px !important;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.15);
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+  border: 1px solid #e2e8f0 !important;
 }
 
 .map-popup-cost {
-  font-size: 12px;
-  font-weight: 800;
-  color: #34d399;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #059669 !important;
 }
 
 .map-popup-title {
-  font-size: 13px;
-  font-weight: 700;
-  margin: 2px 0 4px 0;
-  color: #fff;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin: 2px 0 6px 0 !important;
+  color: #0f172a !important; /* CRITICAL: High-contrast dark text, NEVER white */
 }
 
 .map-popup-desc {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 11px !important;
+  color: #475569 !important; /* High-contrast readable slate text */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 .map-popup-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
-  color: #64748b;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 6px;
+  font-size: 10px !important;
+  color: #64748b !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding-top: 8px;
 }
 
 .status-disrupted {
-  color: #f87171;
-  font-weight: 700;
+  color: #dc2626 !important;
+  font-weight: 700 !important;
 }
 
 .status-ok {
-  color: #34d399;
-  font-weight: 700;
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+/* Dark Mode Leaflet Popup Overrides */
+.dark .custom-leaflet-popup .leaflet-popup-content-wrapper {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+.dark .custom-leaflet-popup .leaflet-popup-tip {
+  background: #0f172a !important;
+}
+
+.dark .map-popup-card {
+  background: #0f172a !important;
+}
+
+.dark .map-popup-title {
+  color: #f8fafc !important;
+}
+
+.dark .map-popup-desc {
+  color: #94a3b8 !important;
+}
+
+.dark .map-popup-type {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #334155 !important;
+}
+
+.dark .map-popup-meta {
+  color: #94a3b8 !important;
+  border-top: 1px solid #1e293b !important;
 }
 

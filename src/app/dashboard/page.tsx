@@ -37,10 +37,13 @@ import {
   Map as MapIcon,
   Maximize2,
   Ticket,
+  AlertCircle,
+  X,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SatelliteMap, MapPoint } from '@/components/SatelliteMap';
+import { NodeIcon } from '@/components/NodeIcon';
 
 // ---------- Node icon mapping ----------
 const nodeIcons: Record<string, React.ReactNode> = {
@@ -273,8 +276,8 @@ export default function DashboardPage() {
                   {currentTrip.name}
                 </h1>
                 {activeDisruption && (
-                  <span className="status-red px-2.5 py-0.5 rounded-full text-xs font-semibold impact-wave inline-flex items-center gap-1">
-                    ⚠️ DISRUPTED
+                  <span className="status-red px-2.5 py-0.5 rounded-full text-xs font-semibold impact-wave inline-flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" /> DISRUPTED
                   </span>
                 )}
               </div>
@@ -728,8 +731,8 @@ export default function DashboardPage() {
                           <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded text-[10px] font-bold bg-black/70 text-white backdrop-blur-xs uppercase tracking-wider">
                             {node.type}
                           </span>
-                          <span className="absolute top-1.5 right-1.5 text-base">
-                            {node.icon}
+                          <span className="absolute top-1.5 right-1.5 p-1.5 rounded-lg bg-black/60 backdrop-blur-xs text-white">
+                            <NodeIcon typeOrIcon={(node as any).icon || node.type} className="w-3.5 h-3.5" />
                           </span>
                         </div>
                       )}
@@ -759,9 +762,19 @@ export default function DashboardPage() {
                               {/* Risk Badge */}
                               {node.riskLevel !== 'low' && node.status === 'confirmed' && (
                                 <span
-                                  className={`${riskBgColors[node.riskLevel]} px-2 py-0.5 rounded-full text-[11px] font-semibold`}
+                                  className={`${riskBgColors[node.riskLevel]} px-2 py-0.5 rounded-full text-[11px] font-semibold flex items-center gap-1`}
                                 >
-                                  {node.riskLevel === 'medium' ? '⚡ At Risk' : '🔴 High Risk'}
+                                  {node.riskLevel === 'medium' ? (
+                                    <>
+                                      <AlertTriangle className="w-3 h-3 text-amber-500" />
+                                      <span>At Risk</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <AlertCircle className="w-3 h-3 text-red-500" />
+                                      <span>High Risk</span>
+                                    </>
+                                  )}
                                 </span>
                               )}
                             </div>
@@ -785,12 +798,12 @@ export default function DashboardPage() {
 
                         {/* Luxury Airline Boarding Pass Details */}
                         {node.type === 'flight' && (
-                          <div className="mt-2.5 p-2.5 rounded-xl bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-transparent border border-blue-500/20 text-xs">
-                            <div className="flex items-center justify-between font-mono font-semibold text-blue-800 dark:text-blue-300">
+                          <div className="mt-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
+                            <div className="flex items-center justify-between font-mono font-semibold text-slate-800 dark:text-slate-200">
                               <span className="flex items-center gap-1.5">
                                 <Plane className="w-3.5 h-3.5 text-blue-500" /> DEL → GOI (IndiGo 6E-2341)
                               </span>
-                              <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold">
+                              <span className="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold">
                                 PNR: TK8829
                               </span>
                             </div>
@@ -804,12 +817,12 @@ export default function DashboardPage() {
 
                         {/* Luxury Resort Villa Details */}
                         {node.type === 'hotel' && (
-                          <div className="mt-2.5 p-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-transparent border border-emerald-500/20 text-xs">
-                            <div className="flex items-center justify-between font-semibold text-emerald-800 dark:text-emerald-300">
+                          <div className="mt-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
+                            <div className="flex items-center justify-between font-semibold text-slate-800 dark:text-slate-200">
                               <span className="flex items-center gap-1.5">
-                                <Hotel className="w-3.5 h-3.5 text-emerald-600" /> 5★ Luxury Sea View Villa
+                                <Hotel className="w-3.5 h-3.5 text-emerald-600" /> 5-Star Luxury Sea View Villa
                               </span>
-                              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-bold">
+                              <span className="text-[10px] px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold">
                                 Booking #TH-88219
                               </span>
                             </div>
@@ -840,7 +853,7 @@ export default function DashboardPage() {
                             </span>
                             <button
                               onClick={() => onSelectId(node.id)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[var(--surface-2)] hover:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-[var(--border)] transition-colors"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[var(--surface-2)] hover:bg-slate-200 text-slate-800 dark:text-slate-200 border border-[var(--border)] transition-colors"
                             >
                               <Navigation className="w-3 h-3" />
                               Satellite
@@ -855,12 +868,13 @@ export default function DashboardPage() {
                             animate={{ opacity: 1, height: 'auto' }}
                             className="mt-3 p-3 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20"
                           >
-                            <p className="text-xs text-red-700 dark:text-red-300 font-semibold">
-                              ⚠️ {impact.explanation}
+                            <p className="text-xs text-red-700 dark:text-red-300 font-semibold flex items-center gap-1.5">
+                              <AlertTriangle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
+                              <span>{impact.explanation}</span>
                             </p>
                             {impact.delayMinutes > 0 && impact.delayMinutes < 9999 && (
                               <span className="inline-block mt-1 text-xs text-red-600 dark:text-red-400 font-bold">
-                                ⏱ Cascade Delay: +{impact.delayMinutes} min
+                                Cascade Delay: +{impact.delayMinutes} min
                               </span>
                             )}
                           </motion.div>
@@ -890,7 +904,7 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
-                          {suggestion.isDisruptionTriggered ? '✨ Adaptive Re-Discovery' : '✨ Slack-Time Opportunity'}
+                          {suggestion.isDisruptionTriggered ? 'Adaptive Re-Discovery' : 'Slack-Time Opportunity'}
                         </span>
                       </div>
                       <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">
@@ -929,15 +943,18 @@ export default function DashboardPage() {
                             </h5>
                           </div>
                           <div className="flex items-center justify-between text-xs text-[var(--text-tertiary)]">
-                            <span>⏱ {exp.durationMinutes} min</span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {exp.durationMinutes} min
+                            </span>
                             <span className="flex items-center gap-0.5 font-semibold text-amber-500">
                               <Star className="w-3 h-3 fill-amber-400" />
                               {exp.rating}
                             </span>
                           </div>
                           {exp.isHidden && (
-                            <span className="inline-block mt-1.5 text-[10px] px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 font-bold">
-                              💎 Hidden Gem
+                            <span className="inline-flex items-center gap-1 mt-1.5 text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700">
+                              <Sparkles className="w-2.5 h-2.5 text-blue-500" /> Hidden Gem
                             </span>
                           )}
                         </div>
@@ -967,18 +984,18 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="glass-card p-5 border-indigo-500/30 shadow-lg"
+            className="glass-card p-5 border-slate-200 dark:border-slate-800 shadow-lg"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
-                <Shield className="w-4 h-4" />
+              <h3 className="text-sm font-bold flex items-center gap-2 text-slate-900 dark:text-white">
+                <Shield className="w-4 h-4 text-blue-600" />
                 Autonomous Self-Healing Plans
               </h3>
               <button
                 onClick={() => setShow(false)}
-                className="text-xs text-[var(--text-tertiary)] hover:text-[var(--foreground)]"
+                className="text-xs p-1 rounded-md text-[var(--text-tertiary)] hover:text-[var(--foreground)] hover:bg-[var(--surface-2)]"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
             <div className="space-y-3">

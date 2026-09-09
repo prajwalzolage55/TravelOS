@@ -17,6 +17,7 @@ import {
   Clock,
   IndianRupee,
   AlertTriangle,
+  Globe,
 } from 'lucide-react';
 import { MapPoint } from '@/components/SatelliteMap';
 
@@ -199,22 +200,52 @@ export default function RealWorldMap({
       polylineRef.current = polyline;
     }
 
+function getMarkerSvg(typeOrIcon: string = 'pin'): string {
+  const k = (typeOrIcon || '').toLowerCase();
+  if (k.includes('plane') || k.includes('flight')) {
+    return `<svg class="w-3 h-3 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>`;
+  }
+  if (k.includes('hotel') || k.includes('resort') || k.includes('villa')) {
+    return `<svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/><path d="M8 7h.01"/><path d="M16 7h.01"/><path d="M12 7h.01"/><path d="M12 11h.01"/><path d="M16 11h.01"/><path d="M8 11h.01"/><path d="M10 22v-6.5m4 0V22"/></svg>`;
+  }
+  if (k.includes('car') || k.includes('transfer') || k.includes('taxi')) {
+    return `<svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>`;
+  }
+  if (k.includes('utensils') || k.includes('food') || k.includes('restaurant') || k.includes('lunch') || k.includes('dinner')) {
+    return `<svg class="w-3 h-3 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"/><path d="M15 2v14a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V2"/><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/></svg>`;
+  }
+  if (k.includes('ship') || k.includes('cruise') || k.includes('boat')) {
+    return `<svg class="w-3 h-3 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10V2"/></svg>`;
+  }
+  if (k.includes('wave') || k.includes('scuba') || k.includes('dive')) {
+    return `<svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>`;
+  }
+  if (k.includes('tree') || k.includes('spice') || k.includes('nature')) {
+    return `<svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"/><path d="m10 10-2 2-2-2 2-2 2 2z"/><path d="m14 14-2 2-2-2 2-2 2 2z"/><path d="m18 10-2 2-2-2 2-2 2 2z"/></svg>`;
+  }
+  if (k.includes('landmark') || k.includes('heritage')) {
+    return `<svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>`;
+  }
+  return `<svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+}
+
     // Add markers with custom HTML
     localPoints.forEach((point) => {
       const isSelected = selectedPointId === point.id;
       const isDisrupted = point.isImpacted || point.status === 'disrupted';
+      const iconSvg = getMarkerSvg(point.icon || point.type);
 
-      // Pin HTML with price, icon, and status badge
+      // Pin HTML with high-contrast badge and SVG icon (Zero emojis)
       const iconHtml = `
         <div class="map-marker-container ${isSelected ? 'marker-selected' : ''}">
           <div class="map-marker-pill ${
             isDisrupted
-              ? 'border-red-500 bg-red-950/90 text-red-200 ring-2 ring-red-500/40'
+              ? 'border-red-500 bg-red-950 text-red-200'
               : isSelected
-              ? 'border-indigo-400 bg-indigo-950/95 text-white ring-2 ring-indigo-400 shadow-xl'
-              : 'border-white/20 bg-slate-900/90 text-white'
+              ? 'border-blue-400 bg-slate-900 text-white'
+              : 'border-slate-700 bg-slate-900 text-white'
           }">
-            <span class="marker-icon">${point.icon || '📍'}</span>
+            <span class="marker-icon">${iconSvg}</span>
             <span class="marker-title">${point.title}</span>
             ${
               point.cost !== undefined
@@ -226,7 +257,7 @@ export default function RealWorldMap({
             isDisrupted
               ? 'bg-red-500 shadow-red-500'
               : isSelected
-              ? 'bg-indigo-400 shadow-indigo-400'
+              ? 'bg-blue-400 shadow-blue-400'
               : 'bg-emerald-400 shadow-emerald-400'
           } ${isDisrupted ? 'marker-pulse' : ''}"></div>
         </div>
@@ -261,7 +292,13 @@ export default function RealWorldMap({
             <h4 class="map-popup-title">${point.title}</h4>
             <p class="map-popup-desc">${point.description || ''}</p>
             <div class="map-popup-meta">
-              <span>📍 ${point.lat.toFixed(4)}°N, ${point.lng.toFixed(4)}°E</span>
+              <span class="flex items-center gap-1">
+                <svg class="w-3 h-3 text-slate-500 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                ${point.lat.toFixed(4)}°N, ${point.lng.toFixed(4)}°E
+              </span>
               <span class="map-popup-status ${isDisrupted ? 'status-disrupted' : 'status-ok'}">
                 ${isDisrupted ? 'DISRUPTED' : 'CONFIRMED'}
               </span>
@@ -337,7 +374,7 @@ export default function RealWorldMap({
       {showControls && (
         <div className="absolute top-3 left-3 right-3 z-[400] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
           {/* Title & Live Status */}
-          <div className="glass-card px-3 py-1.5 flex items-center gap-2 bg-black/75 backdrop-blur-md border-white/20 text-white shadow-lg pointer-events-auto rounded-xl">
+          <div className="glass-card px-3 py-1.5 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white shadow-lg pointer-events-auto rounded-xl">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             <span className="text-xs font-bold tracking-tight">
               {title || 'Real World Satellite & Aerial Radar'}
@@ -347,51 +384,55 @@ export default function RealWorldMap({
             </span>
           </div>
 
-          {/* Map Layer Mode Switcher */}
-          <div className="flex items-center gap-1 glass-card p-1 bg-black/80 backdrop-blur-md border-white/20 shadow-lg pointer-events-auto rounded-xl">
+          {/* Map Layer Mode Switcher - Clean Icons, No Emojis, No Funky Colors */}
+          <div className="flex items-center gap-1 glass-card p-1 bg-slate-900/90 backdrop-blur-md border border-slate-700 shadow-lg pointer-events-auto rounded-xl">
             <button
               onClick={() => setMapMode('hybrid')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                 mapMode === 'hybrid'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
               title="Google Satellite with Roads & Labels"
             >
-              🛰️ Hybrid
+              <Layers className="w-3.5 h-3.5" />
+              <span>Hybrid</span>
             </button>
             <button
               onClick={() => setMapMode('satellite')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                 mapMode === 'satellite'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
               title="Google Pure Satellite Imagery"
             >
-              🛰️ Pure Satellite
+              <Globe className="w-3.5 h-3.5" />
+              <span>Satellite</span>
             </button>
             <button
               onClick={() => setMapMode('street')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                 mapMode === 'street'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
               title="Google Streets Roadmap"
             >
-              🗺️ Streets
+              <Navigation className="w-3.5 h-3.5" />
+              <span>Streets</span>
             </button>
             <button
               onClick={() => setMapMode('terrain')}
-              className={`hidden sm:inline-block px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                 mapMode === 'terrain'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
               title="Google Topographic Terrain"
             >
-              ⛰️ Terrain
+              <Compass className="w-3.5 h-3.5" />
+              <span>Terrain</span>
             </button>
           </div>
         </div>
