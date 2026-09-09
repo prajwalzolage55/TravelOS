@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -17,84 +17,174 @@ import {
   ChevronDown,
   Users,
   Star,
+  Navigation,
+  Layers,
+  CheckCircle,
+  Hotel,
+  IndianRupee,
+  ExternalLink,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { SatelliteMap, MapPoint } from '@/components/SatelliteMap';
 
 const features = [
   {
-    icon: <Zap className="w-6 h-6" />,
+    icon: <Zap className="w-6 h-6 text-indigo-500" />,
     title: 'Trip Dependency Graph',
     description:
-      'Your trip as a living network — every flight, hotel, and activity connected by smart dependencies.',
+      'Your trip modelled as an intelligent directed acyclic graph — flights, luxury villas, transfers, and activities linked by temporal and logistical constraints.',
     color: 'from-indigo-500 to-purple-500',
-    glow: 'rgba(99, 102, 241, 0.3)',
+    glow: 'rgba(99, 102, 241, 0.25)',
   },
   {
-    icon: <Shield className="w-6 h-6" />,
-    title: 'Self-Healing Itinerary',
+    icon: <Shield className="w-6 h-6 text-red-500" />,
+    title: 'Self-Healing Engine',
     description:
-      'Flight delayed? The system detects ripple effects and generates ranked recovery plans in seconds.',
+      'Flight delayed by 4 hours? TravelOS propagates ripple effects through your graph and generates ranked, Pareto-optimal recovery plans in seconds.',
     color: 'from-red-500 to-orange-500',
-    glow: 'rgba(239, 68, 68, 0.3)',
+    glow: 'rgba(239, 68, 68, 0.25)',
   },
   {
-    icon: <Compass className="w-6 h-6" />,
+    icon: <Compass className="w-6 h-6 text-emerald-500" />,
     title: 'Slack-Time Discovery',
     description:
-      'Found a 3-hour gap? We auto-suggest local hidden gems that fit your time, budget, and interests.',
+      'Unlocks hidden 3-hour gaps in your schedule by auto-recommending curated local culinary trails, heritage walks, and sunset points matching your taste profile.',
     color: 'from-emerald-500 to-teal-500',
-    glow: 'rgba(6, 214, 160, 0.3)',
+    glow: 'rgba(6, 214, 160, 0.25)',
   },
   {
-    icon: <BarChart3 className="w-6 h-6" />,
-    title: 'Risk Weather Radar',
+    icon: <Navigation className="w-6 h-6 text-cyan-500" />,
+    title: 'Google Satellite Radar',
     description:
-      'See live risk scores on every booking — weather, delays, provider reliability — before anything breaks.',
-    color: 'from-amber-500 to-yellow-500',
-    glow: 'rgba(245, 158, 11, 0.3)',
+      'High-resolution satellite view tracking GPS locations of all itinerary stops, airport connections, and multi-tour operator fleets with live telemetry.',
+    color: 'from-cyan-500 to-blue-500',
+    glow: 'rgba(6, 182, 212, 0.25)',
   },
   {
-    icon: <Sparkles className="w-6 h-6" />,
+    icon: <Sparkles className="w-6 h-6 text-pink-500" />,
     title: 'Adaptive Re-Discovery',
     description:
-      'Disruptions create opportunities — cancelled scuba? We suggest a waterfall trek that fits the new gap.',
+      'Turn disruptions into unforgettable moments — if rough seas cancel scuba diving, the system instantly swaps in an exclusive spice plantation lunch.',
     color: 'from-pink-500 to-rose-500',
-    glow: 'rgba(236, 72, 153, 0.3)',
+    glow: 'rgba(236, 72, 153, 0.25)',
   },
   {
-    icon: <Globe className="w-6 h-6" />,
+    icon: <BarChart3 className="w-6 h-6 text-amber-500" />,
     title: 'Operator Command Center',
     description:
-      'Tour operators manage 50 tours at once. One live dashboard. Green, Amber, Red. No more email chaos.',
-    color: 'from-cyan-500 to-blue-500',
-    glow: 'rgba(6, 182, 212, 0.3)',
+      'Tour operators manage dozens of concurrent traveler itineraries with Green / Amber / Red status beacons, automated refund handling, and live radar.',
+    color: 'from-amber-500 to-yellow-500',
+    glow: 'rgba(245, 158, 11, 0.25)',
   },
 ];
 
-const lifecycleStages = [
-  'Discover',
-  'Personalize',
-  'Plan',
-  'Price',
-  'Book',
-  'Prepare',
-  'Operate',
-  'Assist',
-  'Adapt',
-  'Complete',
-  'Review',
+const previewMapPoints: MapPoint[] = [
+  {
+    id: 'pt-1',
+    title: 'Taj Exotica Resort & Spa',
+    description: '5-Star Beachfront Luxury Villa in South Goa',
+    lat: 15.2635,
+    lng: 73.9312,
+    type: 'hotel',
+    cost: 32000,
+    provider: 'Taj Hotels',
+    icon: '🏨',
+    status: 'confirmed',
+    riskLevel: 'low',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    id: 'pt-2',
+    title: 'Dabolim International Airport (GOI)',
+    description: 'Flight IndiGo 6E-2341 Arrival Terminal',
+    lat: 15.3808,
+    lng: 73.8313,
+    type: 'flight',
+    cost: 5500,
+    provider: 'IndiGo Airlines',
+    icon: '✈️',
+    status: 'confirmed',
+    riskLevel: 'low',
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    id: 'pt-3',
+    title: 'Grande Island Scuba Base',
+    description: 'Ocean Diving & Coral Reef Exploration',
+    lat: 15.3385,
+    lng: 73.8603,
+    type: 'activity',
+    cost: 4500,
+    provider: 'Dive Goa',
+    icon: '🤿',
+    status: 'confirmed',
+    riskLevel: 'medium',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    id: 'pt-4',
+    title: 'Mandovi Luxury Sunset Cruise',
+    description: 'Private Catamaran with Live Goan Jazz',
+    lat: 15.4989,
+    lng: 73.8278,
+    type: 'activity',
+    cost: 2200,
+    provider: 'Goa Tourism',
+    icon: '⛵',
+    status: 'confirmed',
+    riskLevel: 'low',
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    id: 'pt-5',
+    title: 'Sahakari Organic Spice Farm',
+    description: 'Traditional Ponda Spice Plantation & Feast',
+    lat: 15.4026,
+    lng: 74.0080,
+    type: 'activity',
+    cost: 800,
+    provider: 'Sahakari Farm',
+    icon: '🌿',
+    status: 'confirmed',
+    riskLevel: 'low',
+    image: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=600&auto=format&fit=crop',
+  },
+];
+
+const destinationsShowcase = [
+  {
+    name: 'Taj Exotica Resort & Spa',
+    area: 'Benaulim, South Goa',
+    tag: '5-Star Luxury',
+    cost: '₹32,000 / night',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Grande Island Coral Dives',
+    area: 'Vasco Coast',
+    tag: 'Marine Adventure',
+    cost: '₹4,500 / person',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Fontainhas Latin Quarter',
+    area: 'Panjim Heritage',
+    tag: 'Cultural Heritage',
+    cost: '₹1,200 / person',
+    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Thalassa Sunset Lounge',
+    area: 'Siolim Cliff',
+    tag: 'Fine Dining & Sunset',
+    cost: '₹3,500 / dinner',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop',
+  },
 ];
 
 export default function LandingPage() {
-  const [activeStage, setActiveStage] = useState(0);
+  const [selectedPointId, setSelectedPointId] = useState<string | null>('pt-1');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStage((prev) => (prev + 1) % lifecycleStages.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -106,155 +196,337 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 bg-grid opacity-50" />
+      {/* Dynamic Background Glow */}
+      <div className="fixed inset-0 bg-grid opacity-40 pointer-events-none" />
       <div
-        className="fixed w-[600px] h-[600px] rounded-full opacity-20 blur-[120px] pointer-events-none transition-all duration-1000"
+        className="fixed w-[650px] h-[650px] rounded-full opacity-15 blur-[140px] pointer-events-none transition-all duration-1000"
         style={{
           background: 'radial-gradient(circle, var(--primary) 0%, transparent 70%)',
-          left: mousePos.x - 300,
-          top: mousePos.y - 300,
+          left: mousePos.x - 325,
+          top: mousePos.y - 325,
         }}
       />
 
-      {/* Navigation */}
-      <nav className="relative z-10 flex items-center justify-between px-8 py-5">
+      {/* Top Header / Navigation */}
+      <nav className="relative z-50 flex items-center justify-between px-6 sm:px-10 py-4 glass-card border-b border-[var(--border)] rounded-none">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-emerald-500 flex items-center justify-center shadow-md shadow-indigo-500/20">
             <Globe className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold font-[family-name:var(--font-display)]">
-            Travel<span className="gradient-text">OS</span>
-          </span>
+          <div>
+            <span className="text-xl font-bold font-[family-name:var(--font-display)] tracking-tight">
+              Travel<span className="gradient-text">OS</span>
+            </span>
+            <span className="hidden sm:inline-block ml-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              Enterprise 2026
+            </span>
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--text-secondary)]">
-          <a href="#features" className="hover:text-[var(--primary)] transition-colors">Features</a>
-          <a href="#lifecycle" className="hover:text-[var(--primary)] transition-colors">Lifecycle</a>
-          <a href="#demo" className="hover:text-[var(--primary)] transition-colors">Live Demo</a>
+
+        <div className="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
+          <a href="#features" className="hover:text-[var(--primary)] transition-colors">
+            Graph Engine
+          </a>
+          <a href="#satellite-radar" className="hover:text-[var(--primary)] transition-colors">
+            Satellite Radar
+          </a>
+          <a href="#destinations" className="hover:text-[var(--primary)] transition-colors">
+            Goa Curations
+          </a>
+          <Link href="/discover" className="hover:text-pink-500 transition-colors">
+            Discover
+          </Link>
+          <Link href="/operator" className="hover:text-cyan-500 transition-colors">
+            Operator View
+          </Link>
         </div>
+
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
             href="/dashboard"
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-105"
+            className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 text-white text-xs sm:text-sm font-bold hover:shadow-xl hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-105"
           >
-            Launch App →
+            Launch Experience →
           </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 container-custom pt-20 pb-32">
+      <section className="relative z-10 container-custom pt-16 sm:pt-24 pb-20 sm:pb-28">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center max-w-4xl mx-auto"
         >
-          {/* Badge */}
+          {/* Eyebrow Pill */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text-secondary)] mb-8"
+            transition={{ delay: 0.15 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-xs font-semibold text-[var(--text-secondary)] mb-6 shadow-xs"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Solving PS2 + PS6 + PS7 — One Unified Platform
+            <span>Autonomous Self-Healing Travel Architecture · Live Satellite Telemetry</span>
           </motion.div>
 
-          {/* Title */}
-          <h1 className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-display)] leading-tight mb-6">
-            Your Itinerary is a
-            <br />
+          {/* Main Title */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-display)] leading-[1.1] mb-6">
+            Your Itinerary is a <br />
             <span className="gradient-text">Living Graph</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            TravelOS turns a static itinerary into a living graph — one that{' '}
-            <span className="text-[var(--accent)]">discovers what you&apos;ll love</span>, and{' '}
-            <span className="text-[var(--danger-light)]">heals itself when things go wrong</span>.
+          <p className="text-base sm:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+            Move beyond static PDFs and disjointed booking emails. TravelOS transforms travel into an intelligent network that{' '}
+            <span className="text-[var(--foreground)] font-semibold">discovers hidden local gaps</span>,{' '}
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">tracks stops on high-res satellite radar</span>, and{' '}
+            <span className="text-red-500 font-semibold">heals itself autonomously</span> when delays strike.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3.5 justify-center items-center">
             <Link
               href="/dashboard"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-lg hover:shadow-2xl hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-105"
+              className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 text-white font-bold text-base hover:shadow-2xl hover:shadow-indigo-500/30 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
             >
-              Experience Live Demo
+              Launch Traveler Dashboard
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/operator"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-[var(--border)] text-[var(--foreground)] font-semibold text-lg hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--surface-2)] transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] font-semibold text-base hover:border-indigo-500 hover:bg-[var(--surface-2)] transition-all duration-300 shadow-xs w-full sm:w-auto"
             >
-              <BarChart3 className="w-5 h-5" />
-              Operator Dashboard
+              <BarChart3 className="w-5 h-5 text-cyan-500" />
+              Operator Command Center
+            </Link>
+            <Link
+              href="/discover"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-pink-500/30 bg-pink-500/5 text-pink-600 dark:text-pink-400 font-semibold text-base hover:bg-pink-500/10 transition-all duration-300 w-full sm:w-auto"
+            >
+              <Sparkles className="w-4 h-4" />
+              Explore Goa Curations
             </Link>
           </div>
         </motion.div>
 
-        {/* Animated Lifecycle Ring */}
+        {/* Hero Interactive Visual Showcase */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="mt-20 flex justify-center"
-          id="lifecycle"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="mt-14 max-w-5xl mx-auto"
         >
-          <div className="flex flex-wrap justify-center gap-2 max-w-3xl">
-            {lifecycleStages.map((stage, i) => (
-              <motion.div
-                key={stage}
-                animate={{
-                  scale: i === activeStage ? 1.15 : 1,
-                  opacity: i === activeStage ? 1 : 0.5,
-                }}
-                transition={{ duration: 0.3 }}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
-                  i === activeStage
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30'
-                    : 'bg-[var(--surface-2)] text-[var(--text-secondary)] hover:bg-[var(--surface-3)]'
-                }`}
-                onClick={() => setActiveStage(i)}
-              >
-                {stage}
-                {i < lifecycleStages.length - 1 && (
-                  <span className="ml-2 text-[var(--text-tertiary)]">→</span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          <div className="relative glass-card p-4 sm:p-6 rounded-3xl border border-indigo-500/30 shadow-2xl overflow-hidden bg-slate-950/40">
+            {/* Top Bar simulating luxury TravelOS browser HUD */}
+            <div className="flex items-center justify-between pb-4 mb-4 border-b border-[var(--border)]">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                <span className="text-xs font-mono text-[var(--text-tertiary)] ml-2">
+                  travelos://live.telemetry.goa/flight-del-goi
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Satellite Telemetry Active (15.4989°N, 73.8278°E)
+              </div>
+            </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="flex justify-center mt-16"
-        >
-          <a href="#features" className="flex flex-col items-center gap-2 text-[var(--text-tertiary)] hover:text-[var(--primary)] transition-colors">
-            <span className="text-xs">Scroll to explore</span>
-            <ChevronDown className="w-5 h-5 animate-bounce" />
-          </a>
+            {/* Three Showcase Floating Panels */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {/* Card 1: Airline Boarding Pass */}
+              <div className="glass-card p-4 rounded-2xl border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-transparent shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                    Flight Component
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-mono font-bold">
+                    6E-2341
+                  </span>
+                </div>
+                <div className="flex items-center justify-between my-2">
+                  <div>
+                    <div className="text-xl font-bold font-mono">DEL</div>
+                    <div className="text-[11px] text-[var(--text-tertiary)]">New Delhi T3</div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-xs text-[var(--text-tertiary)]">2h 30m</span>
+                    <Plane className="w-4 h-4 text-blue-500" />
+                    <span className="text-[9px] text-emerald-500 font-bold">On Radar</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold font-mono">GOI</div>
+                    <div className="text-[11px] text-[var(--text-tertiary)]">Goa Dabolim</div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-[var(--border)] flex justify-between text-[11px] text-[var(--text-secondary)]">
+                  <span>Seat: 4A (Priority)</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Gate 14 Confirmed</span>
+                </div>
+              </div>
+
+              {/* Card 2: Luxury Taj Resort */}
+              <div className="glass-card p-4 rounded-2xl border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 to-transparent shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                    Luxury Accommodation
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-bold">
+                    5★ Verified
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 my-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=300&auto=format&fit=crop"
+                    alt="Taj Exotica"
+                    className="w-12 h-12 rounded-xl object-cover"
+                  />
+                  <div>
+                    <h4 className="font-bold text-sm">Taj Exotica Resort</h4>
+                    <p className="text-xs text-[var(--text-tertiary)]">Benaulim Beachfront Villa</p>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-[var(--border)] flex justify-between text-[11px] text-[var(--text-secondary)]">
+                  <span>Check-in: 14:00</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">Butler Assigned</span>
+                </div>
+              </div>
+
+              {/* Card 3: Autonomous Self-Healing */}
+              <div className="glass-card p-4 rounded-2xl border-red-500/30 bg-gradient-to-br from-red-500/10 to-amber-500/5 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-red-600 dark:text-red-400 uppercase tracking-wider">
+                    Graph Self-Healing
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-bold">
+                    ⚡ Auto-Resolved
+                  </span>
+                </div>
+                <div className="my-1.5">
+                  <div className="text-xs font-bold text-[var(--foreground)]">IndiGo Delay +4h Mitigated</div>
+                  <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-0.5">
+                    Taxi automatically rescheduled. Dinner reservation shifted to 20:30. ₹0 penalty incurred.
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-[var(--border)] flex justify-between text-[11px] text-[var(--text-secondary)]">
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">Saved: ₹3,500</span>
+                  <span className="font-mono text-[10px] text-[var(--text-tertiary)]">Confidence: 94%</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </section>
 
-      {/* Features Grid */}
-      <section id="features" className="relative z-10 container-custom py-24">
+      {/* SATELLITE RADAR INTERACTIVE DEMO ON HOME PAGE */}
+      <section id="satellite-radar" className="relative z-10 container-custom py-20 border-t border-[var(--border)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 mb-3">
+            <Navigation className="w-3.5 h-3.5" /> High-Resolution Google Satellite & Aerial Radar
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-3">
+            Real-Time <span className="gradient-text">Geographic Telemetry</span>
+          </h2>
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
+            Interact with the Goa satellite radar below. Switch map layers, pan across coastal coordinates, and click stops to inspect telemetry.
+          </p>
+        </motion.div>
+
+        {/* Live Satellite Map on Landing Page */}
+        <div className="glass-card p-3 sm:p-4 rounded-3xl overflow-hidden shadow-2xl border-indigo-500/20 max-w-5xl mx-auto">
+          <SatelliteMap
+            points={previewMapPoints}
+            selectedPointId={selectedPointId}
+            onPointSelect={(p) => setSelectedPointId(p ? p.id : null)}
+            height="500px"
+            title="Goa Luxury Travel Corridor — Live Satellite & Aerial Navigation"
+          />
+        </div>
+      </section>
+
+      {/* CURATED LUXURY DESTINATIONS SHOWCASE */}
+      <section id="destinations" className="relative z-10 container-custom py-20 border-t border-[var(--border)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12"
+        >
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20 mb-3">
+              <Sparkles className="w-3.5 h-3.5" /> Handpicked Goa Destinations
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)]">
+              Curated by <span className="gradient-text-warm">Cultural Insiders</span>
+            </h2>
+          </div>
+          <Link
+            href="/discover"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-pink-600 dark:text-pink-400 hover:underline"
+          >
+            Explore all 12 Goa experiences <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {destinationsShowcase.map((item, idx) => (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card rounded-2xl overflow-hidden group shadow-sm hover:shadow-xl hover:border-indigo-500/30 transition-all duration-300"
+            >
+              <div className="h-44 relative overflow-hidden bg-slate-900">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-black/50 text-white backdrop-blur-md">
+                  {item.tag}
+                </span>
+                <span className="absolute bottom-3 left-3 text-xs font-bold text-white drop-shadow-sm">
+                  {item.cost}
+                </span>
+              </div>
+              <div className="p-4">
+                <h3 className="font-bold text-sm line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {item.name}
+                </h3>
+                <p className="text-xs text-[var(--text-secondary)] mt-0.5 flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-red-500" />
+                  {item.area}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* THREE SUPERPOWERS FEATURE GRID */}
+      <section id="features" className="relative z-10 container-custom py-24 border-t border-[var(--border)]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-display)] mb-4">
-            One Graph. <span className="gradient-text">Three Superpowers.</span>
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+            One Core Graph. <span className="gradient-text">Complete Autonomous Control.</span>
           </h2>
-          <p className="text-[var(--text-secondary)] max-w-xl mx-auto">
-            Every trip is a dependency graph. We plan it, protect it, and enrich it — all from one data structure.
+          <p className="text-base text-[var(--text-secondary)] max-w-xl mx-auto">
+            Every booking, constraint, and provider contract is linked. We plan it, monitor it from orbit, and heal it when life happens.
           </p>
         </motion.div>
 
@@ -265,16 +537,14 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-card glass-card-hover p-6 cursor-pointer group"
+              transition={{ delay: i * 0.08 }}
+              className="glass-card p-6 rounded-2xl group hover:border-indigo-500/30 transition-all duration-300 shadow-xs"
             >
-              <div
-                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
-              >
+              <div className="w-12 h-12 rounded-xl bg-[var(--surface-2)] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 {feature.icon}
               </div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+              <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>
@@ -282,118 +552,50 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Demo Preview Section */}
-      <section id="demo" className="relative z-10 container-custom py-24">
+      {/* FINAL CTA */}
+      <section className="relative z-10 container-custom py-20 border-t border-[var(--border)] text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="glass-card p-10 sm:p-14 rounded-3xl border border-indigo-500/30 shadow-2xl bg-gradient-to-b from-indigo-500/5 to-purple-500/5 max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-display)] mb-4">
-            See the <span className="gradient-text-warm">Magic</span> in Action
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 mb-4">
+            Ready for Demo
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4">
+            Experience the Future of Travel Operations
           </h2>
-          <p className="text-[var(--text-secondary)] max-w-xl mx-auto">
-            Watch how a simple flight delay cascades through your trip — and how TravelOS heals it instantly.
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
+            Pre-loaded with a full Goa luxury itinerary. Test flight delays, watch self-healing recovery, explore satellite telemetry, and discover local gems.
           </p>
-        </motion.div>
 
-        {/* Demo Steps */}
-        <div className="max-w-4xl mx-auto">
-          {[
-            {
-              step: '1',
-              icon: <Plane className="w-5 h-5" />,
-              title: 'Flight Delayed 4 Hours',
-              desc: 'IndiGo 6E-2341 DEL→GOI delayed due to fog',
-              color: 'border-red-500/30 bg-red-500/5 dark:bg-red-500/10',
-              badge: 'DISRUPTION',
-              badgeColor: 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400',
-            },
-            {
-              step: '2',
-              icon: <Zap className="w-5 h-5" />,
-              title: 'Impact Propagation',
-              desc: 'Flight → Taxi missed → Late check-in → Dinner at risk → Cruise impossible',
-              color: 'border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10',
-              badge: 'RIPPLE EFFECT',
-              badgeColor: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',
-            },
-            {
-              step: '3',
-              icon: <Shield className="w-5 h-5" />,
-              title: '3 Recovery Plans Generated',
-              desc: 'Minimal Changes (₹+1,200) • Budget Saver (₹-3,500 refund) • Time Keeper (₹+4,200)',
-              color: 'border-indigo-500/30 bg-indigo-500/5 dark:bg-indigo-500/10',
-              badge: 'RECOVERY',
-              badgeColor: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400',
-            },
-            {
-              step: '4',
-              icon: <Compass className="w-5 h-5" />,
-              title: 'New Experiences Discovered',
-              desc: '4-hour airport gap → Airport Lounge + Fontainhas Heritage Walk suggested',
-              color: 'border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10',
-              badge: 'RE-DISCOVERY',
-              badgeColor: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400',
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={item.step}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className={`flex items-start gap-6 p-6 rounded-2xl border ${item.color} mb-4`}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 text-white font-bold text-base shadow-xl shadow-indigo-500/25 hover:scale-105 transition-all"
             >
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--surface-2)] flex items-center justify-center text-[var(--primary)] font-bold">
-                {item.step}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-1">
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${item.badgeColor}`}>
-                    {item.badge}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold mb-1 flex items-center gap-2">
-                  {item.icon} {item.title}
-                </h3>
-                <p className="text-sm text-[var(--text-secondary)]">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Final CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <Link
-            href="/dashboard"
-            className="group inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105"
-          >
-            Try It Now — Live Demo
-            <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <p className="text-[var(--text-tertiary)] text-sm mt-4">
-            No sign-up required. Pre-loaded with a Goa trip.
-          </p>
+              Launch Traveler Concierge →
+            </Link>
+            <Link
+              href="/operator"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] font-semibold text-base hover:bg-[var(--surface-2)] transition-all"
+            >
+              Open Operator Command Center
+            </Link>
+          </div>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-[var(--border)] py-8 px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--text-tertiary)]">
+      <footer className="relative z-10 border-t border-[var(--border)] py-8 px-8 glass-card rounded-none">
+        <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-tertiary)]">
           <div className="flex items-center gap-2">
-            <Globe className="w-4 h-4" />
-            <span>TravelOS — HackCelestial 2026</span>
+            <Globe className="w-4 h-4 text-indigo-500" />
+            <span className="font-bold text-[var(--foreground)]">TravelOS</span>
+            <span>— Autonomous Travel Operating System</span>
           </div>
-          <div className="flex items-center gap-1">
-            Built with <span className="text-red-500">♥</span> for PS2 + PS6 + PS7
-          </div>
+          <div>Built with Next.js 15, Turbopack, Framer Motion & Google Satellite Aerial Telemetry</div>
         </div>
       </footer>
     </div>

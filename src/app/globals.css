@@ -309,3 +309,179 @@ body {
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
+/* Leaflet Real World Map Custom Styling */
+.leaflet-container {
+  font-family: inherit;
+  background-color: #0b1120;
+}
+
+.custom-leaflet-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.map-marker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-8px);
+  cursor: pointer;
+}
+
+.map-marker-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  border-width: 1.5px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.map-marker-pill:hover,
+.marker-selected .map-marker-pill {
+  transform: scale(1.08);
+}
+
+.marker-icon {
+  font-size: 13px;
+}
+
+.marker-title {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marker-price {
+  color: #34d399;
+  font-weight: 800;
+  font-size: 10px;
+}
+
+.marker-pointer {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  margin-top: 3px;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.marker-pulse {
+  animation: markerPing 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes markerPing {
+  75%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Custom Leaflet Popup */
+.custom-leaflet-popup .leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.5);
+}
+
+.custom-leaflet-popup .leaflet-popup-content {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.custom-leaflet-popup .leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.map-popup-card {
+  width: 260px;
+}
+
+.map-popup-img {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+}
+
+.map-popup-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.map-popup-body {
+  padding: 12px;
+}
+
+.map-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.map-popup-type {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.map-popup-cost {
+  font-size: 12px;
+  font-weight: 800;
+  color: #34d399;
+}
+
+.map-popup-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 2px 0 4px 0;
+  color: #fff;
+}
+
+.map-popup-desc {
+  font-size: 11px;
+  color: #94a3b8;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.map-popup-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #64748b;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 6px;
+}
+
+.status-disrupted {
+  color: #f87171;
+  font-weight: 700;
+}
+
+.status-ok {
+  color: #34d399;
+  font-weight: 700;
+}
+

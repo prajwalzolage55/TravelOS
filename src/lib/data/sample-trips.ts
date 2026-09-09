@@ -5,11 +5,13 @@
 
 import { Trip, TripNode, TripEdge } from '@/lib/utils/types';
 
-// ---------- Helper to create dates relative to "today" ----------
+// ---------- Helper to create deterministic dates for SSR and client hydration ----------
+const BASE_DATE = new Date('2026-09-10T00:00:00.000Z');
+
 function getDate(dayOffset: number, hour: number, minute: number = 0): string {
-  const date = new Date();
-  date.setDate(date.getDate() + dayOffset + 1); // start tomorrow
-  date.setHours(hour, minute, 0, 0);
+  const date = new Date(BASE_DATE);
+  date.setUTCDate(date.getUTCDate() + dayOffset);
+  date.setUTCHours(hour, minute, 0, 0);
   return date.toISOString();
 }
 
@@ -494,7 +496,7 @@ export const sampleDisruptions = [
       'IndiGo 6E-2341 DEL→GOI is delayed by 4 hours due to fog at Delhi Airport. New departure: 10:00 AM, new arrival: 12:30 PM.',
     severity: 'severe' as const,
     delayMinutes: 240,
-    timestamp: new Date().toISOString(),
+    timestamp: '2026-09-10T08:00:00.000Z',
   },
   {
     id: 'disruption-flight-cancel',
@@ -504,7 +506,7 @@ export const sampleDisruptions = [
     description:
       'IndiGo 6E-2341 DEL→GOI has been cancelled due to technical issues. All passengers will be rebooked.',
     severity: 'severe' as const,
-    timestamp: new Date().toISOString(),
+    timestamp: '2026-09-10T08:00:00.000Z',
   },
   {
     id: 'disruption-scuba-weather',
@@ -514,7 +516,7 @@ export const sampleDisruptions = [
     description:
       'Scuba diving at Grande Island cancelled due to high waves and rough sea conditions. Provider has issued full refund.',
     severity: 'moderate' as const,
-    timestamp: new Date().toISOString(),
+    timestamp: '2026-09-10T08:00:00.000Z',
   },
 ];
 

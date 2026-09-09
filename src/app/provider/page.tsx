@@ -284,14 +284,28 @@ export default function ProviderPage() {
               className="glass-card glass-card-hover overflow-hidden cursor-pointer group"
               onClick={() => setSelectedExp(selectedExp === exp.id ? null : exp.id)}
             >
-              {/* Color header based on category */}
-              <div className="h-24 bg-gradient-to-br from-[var(--surface-2)] to-[var(--surface-3)] flex items-center justify-center text-4xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <span className="transform group-hover:scale-125 transition-transform">
-                  {categoryEmoji[exp.category] || '🎯'}
+              {/* Photography header with fallback */}
+              <div className="h-32 bg-slate-900 relative overflow-hidden">
+                {exp.images && exp.images.length > 0 ? (
+                  <img
+                    src={exp.images[0]}
+                    alt={exp.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop';
+                    }}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-4xl">
+                    {categoryEmoji[exp.category] || '🎯'}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-bold bg-black/60 text-white backdrop-blur-xs uppercase tracking-wider">
+                  {exp.category}
                 </span>
                 {exp.isHidden && (
-                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-medium bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/30">
+                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-600 text-white shadow-xs">
                     💎 Hidden Gem
                   </span>
                 )}

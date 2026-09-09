@@ -18,7 +18,7 @@ export const goaExperiences: Experience[] = [
     currency: 'INR',
     rating: 4.8,
     reviewCount: 342,
-    images: ['https://images.unsplash.com/photo-1582650625119-3a31f841839d?q=80&w=800&auto=format&fit=crop'],
+    images: ['https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800&auto=format&fit=crop'],
     tags: ['walking', 'history', 'photography', 'architecture', 'art'],
     groupTypes: ['solo', 'couple', 'friends'],
     availability: [
@@ -258,7 +258,7 @@ export const goaExperiences: Experience[] = [
     currency: 'INR',
     rating: 4.5,
     reviewCount: 145,
-    images: ['https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?q=80&w=800&auto=format&fit=crop'],
+    images: ['https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800&auto=format&fit=crop'],
     tags: ['art', 'urban', 'photography', 'walking', 'cultural'],
     groupTypes: ['solo', 'couple', 'friends'],
     availability: [

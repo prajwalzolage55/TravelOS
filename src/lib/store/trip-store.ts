@@ -90,7 +90,7 @@ export const useTripStore = create<TripStore>((set, get) => {
       overallStatus: i === 0 ? 'on-track' : i === 1 ? 'at-risk' : 'on-track',
       activeDisruptions: i === 1 ? [sampleDisruptions[2]] : [],
       pendingRecoveries: [],
-      lastUpdated: new Date().toISOString(),
+      lastUpdated: '2026-09-10T09:30:00.000Z',
     })) as OperatorTour[],
     chatMessages: [],
     isChatOpen: false,
