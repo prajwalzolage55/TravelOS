@@ -137,7 +137,7 @@ export default function DiscoverPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-2 shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Handcrafted Local Goa Expeditions
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] mb-1 text-slate-900 dark:text-white">
+            <h1 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] mb-1 text-[var(--foreground)]">
               Discover <span className="gradient-text">Authentic Goa</span>
             </h1>
             <p className="text-sm text-[var(--text-secondary)]">

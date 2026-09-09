@@ -987,7 +987,7 @@ export default function DashboardPage() {
             className="glass-card p-5 border-slate-200 dark:border-slate-800 shadow-lg"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold flex items-center gap-2 text-slate-900 dark:text-white">
+              <h3 className="text-sm font-bold flex items-center gap-2 text-[var(--foreground)]">
                 <Shield className="w-4 h-4 text-blue-600" />
                 Autonomous Self-Healing Plans
               </h3>

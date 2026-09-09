@@ -260,7 +260,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Main Title */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-display)] leading-[1.1] mb-8 text-slate-900 dark:text-white">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-display)] leading-[1.1] mb-8 text-[var(--foreground)]">
             Your Itinerary is a <br />
             <span className="gradient-text">Living Graph</span>
           </h1>
@@ -270,7 +270,7 @@ export default function LandingPage() {
             Move beyond static PDFs and disjointed booking emails. TravelOS transforms travel into an intelligent network that{' '}
             <span className="text-[var(--foreground)] font-semibold">discovers hidden local gaps</span>,{' '}
             <span className="text-blue-600 dark:text-blue-400 font-semibold">tracks stops on high-res satellite radar</span>, and{' '}
-            <span className="text-slate-900 dark:text-slate-100 font-semibold">heals itself autonomously</span> when delays strike.
+            <span className="text-[var(--foreground)] font-semibold">heals itself autonomously</span> when delays strike.
           </p>
 
           {/* CTAs - Clean solid colors, no funky rainbows */}
@@ -423,7 +423,7 @@ export default function LandingPage() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-4 shadow-xs">
             <Navigation className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> High-Resolution Google Satellite & Aerial Radar
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-[var(--foreground)]">
             Real-Time <span className="gradient-text">Geographic Telemetry</span>
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
@@ -455,7 +455,7 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-4 shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Handpicked Goa Destinations
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] text-slate-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] text-[var(--foreground)]">
               Curated by <span className="gradient-text">Cultural Insiders</span>
             </h2>
           </div>
@@ -495,7 +495,7 @@ export default function LandingPage() {
                 </span>
               </div>
               <div className="p-5">
-                <h3 className="font-bold text-sm line-clamp-1 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="font-bold text-sm line-clamp-1 text-[var(--foreground)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {item.name}
                 </h3>
                 <p className="text-xs text-[var(--text-secondary)] mt-1.5 flex items-center gap-1.5">
@@ -516,7 +516,7 @@ export default function LandingPage() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-[var(--foreground)]">
             One Core Graph. <span className="gradient-text">Complete Autonomous Control.</span>
           </h2>
           <p className="text-base text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
@@ -537,7 +537,7 @@ export default function LandingPage() {
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
                 {feature.icon}
               </div>
-              <h3 className="text-base font-bold mb-2 text-slate-900 dark:text-white">{feature.title}</h3>
+              <h3 className="text-base font-bold mb-2 text-[var(--foreground)]">{feature.title}</h3>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                 {feature.description}
               </p>
@@ -557,7 +557,7 @@ export default function LandingPage() {
           <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-5 shadow-xs">
             Ready for Demo
           </span>
-          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-[var(--foreground)]">
             Experience the Future of Travel Operations
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto mb-10 leading-relaxed">

@@ -266,8 +266,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
       const customIcon = L.divIcon({
         className: 'custom-leaflet-marker',
         html: iconHtml,
-        iconSize: [160, 48],
-        iconAnchor: [80, 48],
+        iconSize: [220, 50],
+        iconAnchor: [110, 50],
       });
 
       const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(map);
@@ -374,9 +374,9 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
       {showControls && (
         <div className="absolute top-3 left-3 right-3 z-[400] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
           {/* Title & Live Status */}
-          <div className="glass-card px-3 py-1.5 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md border border-slate-700 text-white shadow-lg pointer-events-auto rounded-xl">
+          <div className="px-3.5 py-1.5 flex items-center gap-2.5 bg-slate-950/95 backdrop-blur-md border border-slate-700/80 text-white shadow-xl pointer-events-auto rounded-xl">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="text-xs font-bold tracking-tight">
+            <span className="text-xs font-bold tracking-tight text-white">
               {title || 'Real World Satellite & Aerial Radar'}
             </span>
             <span className="text-[10px] text-emerald-400 font-mono hidden sm:inline font-bold">
@@ -384,8 +384,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
             </span>
           </div>
 
-          {/* Map Layer Mode Switcher - Clean Icons, No Emojis, No Funky Colors */}
-          <div className="flex items-center gap-1 glass-card p-1 bg-slate-900/90 backdrop-blur-md border border-slate-700 shadow-lg pointer-events-auto rounded-xl">
+          {/* Map Layer Mode Switcher - Clean Icons, High Contrast Dark Container */}
+          <div className="flex items-center gap-1 p-1 bg-slate-950/95 backdrop-blur-md border border-slate-700/80 shadow-xl pointer-events-auto rounded-xl">
             <button
               onClick={() => setMapMode('hybrid')}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
@@ -395,8 +395,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
               }`}
               title="Google Satellite with Roads & Labels"
             >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Hybrid</span>
+              <Layers className="w-3.5 h-3.5 text-inherit" />
+              <span className="text-inherit">Hybrid</span>
             </button>
             <button
               onClick={() => setMapMode('satellite')}
@@ -407,8 +407,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
               }`}
               title="Google Pure Satellite Imagery"
             >
-              <Globe className="w-3.5 h-3.5" />
-              <span>Satellite</span>
+              <Globe className="w-3.5 h-3.5 text-inherit" />
+              <span className="text-inherit">Satellite</span>
             </button>
             <button
               onClick={() => setMapMode('street')}
@@ -419,8 +419,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
               }`}
               title="Google Streets Roadmap"
             >
-              <Navigation className="w-3.5 h-3.5" />
-              <span>Streets</span>
+              <Navigation className="w-3.5 h-3.5 text-inherit" />
+              <span className="text-inherit">Streets</span>
             </button>
             <button
               onClick={() => setMapMode('terrain')}
@@ -431,8 +431,8 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
               }`}
               title="Google Topographic Terrain"
             >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Terrain</span>
+              <Compass className="w-3.5 h-3.5 text-inherit" />
+              <span className="text-inherit">Terrain</span>
             </button>
           </div>
         </div>
@@ -442,28 +442,28 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
       <div className="absolute bottom-4 right-4 z-[400] flex flex-col gap-2 pointer-events-auto">
         <button
           onClick={handleZoomIn}
-          className="w-9 h-9 rounded-xl bg-black/75 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
+          className="w-9 h-9 rounded-xl bg-slate-950/95 hover:bg-slate-800 text-white border border-slate-700/80 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
           title="Zoom In"
         >
           <ZoomIn className="w-4 h-4" />
         </button>
         <button
           onClick={handleZoomOut}
-          className="w-9 h-9 rounded-xl bg-black/75 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
+          className="w-9 h-9 rounded-xl bg-slate-950/95 hover:bg-slate-800 text-white border border-slate-700/80 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
           title="Zoom Out"
         >
           <ZoomOut className="w-4 h-4" />
         </button>
         <button
           onClick={handleFitAll}
-          className="w-9 h-9 rounded-xl bg-black/75 hover:bg-black/90 text-emerald-400 border border-white/20 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
+          className="w-9 h-9 rounded-xl bg-slate-950/95 hover:bg-slate-800 text-emerald-400 border border-slate-700/80 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
           title="Fit All Tour Stops"
         >
           <Compass className="w-4 h-4" />
         </button>
         <button
           onClick={() => setIsFullscreen(!isFullscreen)}
-          className="w-9 h-9 rounded-xl bg-black/75 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
+          className="w-9 h-9 rounded-xl bg-slate-950/95 hover:bg-slate-800 text-white border border-slate-700/80 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hover:scale-105"
           title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
         >
           {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -472,15 +472,15 @@ function getMarkerSvg(typeOrIcon: string = 'pin'): string {
 
       {/* Bottom Coordinates HUD */}
       <div className="absolute bottom-4 left-4 z-[400] pointer-events-none hidden sm:flex items-center gap-2">
-        <div className="glass-card px-3 py-1.5 bg-black/70 backdrop-blur-md border-white/15 text-white/90 text-[10px] font-mono rounded-xl shadow-md">
-          <span>COORDINATES: </span>
-          <span className="text-emerald-400 font-bold">
+        <div className="px-3.5 py-1.5 bg-slate-950/95 backdrop-blur-md border border-slate-700/80 text-white text-[10px] font-mono rounded-xl shadow-xl flex items-center gap-1.5">
+          <span className="text-slate-400 font-semibold">COORDINATES:</span>
+          <span className="text-emerald-400 font-bold font-mono">
             {activeCenter.lat.toFixed(4)}°N, {activeCenter.lng.toFixed(4)}°E
           </span>
-          <span className="mx-1 text-white/40">|</span>
-          <span>ZOOM: {currentZoom}x</span>
-          <span className="mx-1 text-white/40">|</span>
-          <span>STOPS: {localPoints.length}</span>
+          <span className="mx-1 text-slate-600">|</span>
+          <span className="text-slate-300 font-semibold">ZOOM: {currentZoom}x</span>
+          <span className="mx-1 text-slate-600">|</span>
+          <span className="text-slate-300 font-semibold">STOPS: {localPoints.length}</span>
         </div>
       </div>
     </div>

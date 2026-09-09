@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Premium Light Theme (Default) */
   --background: #f8fafc;
@@ -319,6 +321,8 @@ body {
 .custom-leaflet-marker {
   background: transparent !important;
   border: none !important;
+  overflow: visible !important;
+  z-index: 500 !important;
 }
 
 .map-marker-container {
@@ -331,17 +335,17 @@ body {
 
 /* High contrast map marker pill - ALWAYS ultra-legible on any satellite/street tile */
 .map-marker-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 9999px;
   font-size: 11px;
   font-weight: 700;
-  background: #0f172a !important; /* Dark solid base eliminates map glare */
+  background: #020617 !important; /* Deep solid slate-950 base */
   color: #ffffff !important;
-  border: 1.5px solid #334155 !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+  border: 1.5px solid #475569 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
   white-space: nowrap;
   transition: all 0.2s ease;
 }
@@ -350,27 +354,32 @@ body {
 .marker-selected .map-marker-pill {
   transform: scale(1.08);
   border-color: #60a5fa !important;
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6) !important;
 }
 
 .marker-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .marker-title {
-  max-width: 120px;
+  max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #f8fafc !important;
-  font-weight: 600;
+  color: #ffffff !important;
+  font-weight: 700;
   font-size: 11px;
 }
 
 .marker-price {
   color: #34d399 !important;
+  background: rgba(16, 185, 129, 0.2) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  padding: 1px 5px !important;
+  border-radius: 4px !important;
   font-weight: 800;
   font-size: 10px;
   margin-left: 2px;
