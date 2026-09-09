@@ -35,34 +35,34 @@
 }
 
 .dark {
-  /* Dark Theme */
-  --background: #0a0a0f;
-  --foreground: #f0f0f5;
-  --primary: #6366f1;
-  --primary-light: #818cf8;
-  --primary-dark: #4f46e5;
-  --accent: #06d6a0;
-  --accent-light: #34ebc0;
+  /* Executive Luxury Dark Theme (Obsidian & Deep Midnight Sapphire) */
+  --background: #070b14;
+  --foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #2563eb;
+  --accent: #10b981;
+  --accent-light: #34d399;
   --danger: #ef4444;
   --danger-light: #f87171;
   --warning: #f59e0b;
   --warning-light: #fbbf24;
   --success: #10b981;
   --success-light: #34d399;
-  --surface: #13131a;
-  --surface-2: #1c1c27;
-  --surface-3: #252533;
-  --border: #2a2a3d;
-  --border-light: #3a3a52;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
-  --glass-bg: rgba(19, 19, 26, 0.75);
-  --glass-border: rgba(99, 102, 241, 0.18);
-  --glow-primary: rgba(99, 102, 241, 0.4);
-  --glow-accent: rgba(6, 214, 160, 0.4);
-  --glow-danger: rgba(239, 68, 68, 0.4);
-  --card-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  --card-shadow-hover: 0 0 30px var(--glow-primary);
+  --surface: #0f172a;
+  --surface-2: #1e293b;
+  --surface-3: #334155;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-light: rgba(255, 255, 255, 0.18);
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --glass-bg: rgba(15, 23, 42, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glow-primary: rgba(59, 130, 246, 0.35);
+  --glow-accent: rgba(16, 185, 129, 0.35);
+  --glow-danger: rgba(239, 68, 68, 0.35);
+  --card-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6);
+  --card-shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.35);
 }
 
 @theme inline {
@@ -103,7 +103,7 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Glass Card */
+/* Glass Card - Light & Premium Dark Specular Elevation */
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -113,11 +113,25 @@ body {
   box-shadow: var(--card-shadow);
 }
 
-.glass-card-hover:hover {
-  border-color: var(--primary-light);
-  box-shadow: var(--card-shadow-hover);
+/* Executive Specular Sheen in Dark Mode */
+.dark .glass-card {
+  background: linear-gradient(180deg, rgba(23, 33, 54, 0.65) 0%, rgba(13, 20, 36, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12), /* 1px specular top highlight bevel */
+    0 12px 30px -8px rgba(0, 0, 0, 0.65),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-hover:hover,
+.dark .glass-card-hover:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    0 18px 45px -10px rgba(37, 99, 235, 0.3),
+    0 0 20px -3px rgba(59, 130, 246, 0.2);
   transform: translateY(-2px);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Glow Effects */
@@ -168,6 +182,14 @@ body {
     linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
   background-size: 48px 48px;
+}
+
+.dark .bg-grid {
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37, 99, 235, 0.15) 0%, transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
 }
 
 /* Pulse Animation for Risk Badges */

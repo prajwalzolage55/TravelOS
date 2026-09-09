@@ -306,7 +306,7 @@ export default function LandingPage() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mt-16 max-w-5xl mx-auto"
         >
-          <div className="relative glass-card p-5 sm:p-7 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden bg-white dark:bg-slate-900">
+          <div className="relative glass-card p-5 sm:p-7 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl">
             {/* Top Bar simulating luxury TravelOS browser HUD */}
             <div className="flex items-center justify-between pb-4 mb-5 border-b border-[var(--border)]">
               <div className="flex items-center gap-2">
@@ -326,7 +326,7 @@ export default function LandingPage() {
             {/* Three Showcase Floating Panels */}
             <div className="grid md:grid-cols-3 gap-5">
               {/* Card 1: Airline Boarding Pass */}
-              <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 shadow-xs">
+              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     Flight Component
@@ -357,7 +357,7 @@ export default function LandingPage() {
               </div>
 
               {/* Card 2: Luxury Taj Resort */}
-              <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 shadow-xs">
+              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     Luxury Accommodation
@@ -387,7 +387,7 @@ export default function LandingPage() {
               </div>
 
               {/* Card 3: Autonomous Self-Healing */}
-              <div className="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 shadow-xs">
+              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     Graph Self-Healing
@@ -475,7 +475,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="glass-card rounded-2xl overflow-hidden group shadow-sm hover:shadow-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 transition-all duration-300"
+              className="glass-card rounded-2xl overflow-hidden group shadow-md hover:shadow-xl border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="h-44 relative overflow-hidden bg-slate-900">
                 <img
@@ -532,9 +532,9 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="glass-card p-7 sm:p-8 rounded-2xl group hover:border-blue-500/40 transition-all duration-300 shadow-sm border border-slate-200 dark:border-slate-800"
+              className="glass-card p-7 sm:p-8 rounded-2xl group transition-all duration-300 border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:-translate-y-1.5 shadow-md hover:shadow-xl"
             >
-              <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform border border-slate-200 dark:border-slate-700">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300 border border-blue-200/80 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 shadow-sm dark:shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                 {feature.icon}
               </div>
               <h3 className="text-base font-bold mb-2 text-[var(--foreground)]">{feature.title}</h3>
@@ -552,8 +552,9 @@ export default function LandingPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="glass-card p-12 sm:p-16 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 max-w-4xl mx-auto"
+          className="glass-card p-12 sm:p-16 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-2xl bg-white dark:bg-gradient-to-b dark:from-slate-900/95 dark:to-slate-950/95 max-w-4xl mx-auto relative overflow-hidden"
         >
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
           <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-5 shadow-xs">
             Ready for Demo
           </span>
