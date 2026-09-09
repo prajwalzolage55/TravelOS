@@ -173,6 +173,7 @@ const destinationsShowcase = [
 export default function LandingPage() {
   const [selectedPointId, setSelectedPointId] = useState<string | null>('pt-1');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [simulationStage, setSimulationStage] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -180,6 +181,14 @@ export default function LandingPage() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Professional self-healing live ticker cycle
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSimulationStage((prev) => (prev + 1) % 3);
+    }, 3800);
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -323,10 +332,14 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Three Showcase Floating Panels */}
+            {/* Three Showcase Floating Panels with Micro-Animations */}
             <div className="grid md:grid-cols-3 gap-5">
-              {/* Card 1: Airline Boarding Pass */}
-              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
+              {/* Card 1: Airline Boarding Pass with Animated Radar Path */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     Flight Component
@@ -340,10 +353,23 @@ export default function LandingPage() {
                     <div className="text-xl font-bold font-mono">DEL</div>
                     <div className="text-[11px] text-[var(--text-tertiary)]">New Delhi T3</div>
                   </div>
-                  <div className="flex flex-col items-center">
-                    <span className="text-xs text-[var(--text-tertiary)]">2h 30m</span>
-                    <Plane className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold">On Radar</span>
+                  <div className="flex flex-col items-center relative w-24">
+                    <span className="text-[10px] font-mono text-[var(--text-tertiary)]">2h 30m</span>
+                    {/* Animated Flight Path Line with Traveling Beacon */}
+                    <div className="relative w-full flex items-center justify-center my-1 h-4">
+                      <div className="w-full h-[1px] border-b border-dashed border-blue-400/60 dark:border-blue-500/60" />
+                      <motion.div
+                        animate={{ x: [-28, 28] }}
+                        transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                        className="absolute"
+                      >
+                        <Plane className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 rotate-90" />
+                      </motion.div>
+                    </div>
+                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      On Radar
+                    </span>
                   </div>
                   <div className="text-right">
                     <div className="text-xl font-bold font-mono">GOI</div>
@@ -354,10 +380,14 @@ export default function LandingPage() {
                   <span>Seat: 4A (Priority)</span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">Gate 14 Confirmed</span>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Card 2: Luxury Taj Resort */}
-              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
+              {/* Card 2: Luxury Taj Resort with Gentle Floating Elevation */}
+              <motion.div
+                animate={{ y: [0, 5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+                className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300"
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     Luxury Accommodation
@@ -370,7 +400,7 @@ export default function LandingPage() {
                   <img
                     src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=300&auto=format&fit=crop"
                     alt="Taj Exotica"
-                    className="w-12 h-12 rounded-xl object-cover"
+                    className="w-12 h-12 rounded-xl object-cover shadow-xs"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=300&auto=format&fit=crop';
                     }}
@@ -384,29 +414,112 @@ export default function LandingPage() {
                   <span>Check-in: 14:00</span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">Butler Assigned</span>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Card 3: Autonomous Self-Healing */}
-              <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300">
+              {/* Card 3: Autonomous Self-Healing with Live Animated Simulation Ticker */}
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+                className="p-5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-gradient-to-b dark:from-slate-800/80 dark:to-slate-900/80 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+              >
+                {/* Glowing status bar */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500" />
+                
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                    Graph Self-Healing
+                    Self-Healing Engine
                   </span>
-                  <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700">
-                    <Zap className="w-2.5 h-2.5 text-blue-600 dark:text-blue-400" /> Auto-Resolved
-                  </span>
+                  <AnimatePresence mode="wait">
+                    {simulationStage === 0 && (
+                      <motion.span
+                        key="badge-0"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 font-bold border border-red-500/30"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
+                        Delay Alert
+                      </motion.span>
+                    )}
+                    {simulationStage === 1 && (
+                      <motion.span
+                        key="badge-1"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30"
+                      >
+                        <Zap className="w-2.5 h-2.5 animate-spin" />
+                        Graph Rerouting
+                      </motion.span>
+                    )}
+                    {simulationStage === 2 && (
+                      <motion.span
+                        key="badge-2"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/30"
+                      >
+                        <CheckCircle className="w-2.5 h-2.5" />
+                        Auto-Resolved
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <div className="my-1.5">
-                  <div className="text-xs font-bold text-[var(--foreground)]">IndiGo Delay +4h Mitigated</div>
-                  <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-0.5">
-                    Taxi automatically rescheduled. Dinner reservation shifted to 20:30. ₹0 penalty incurred.
-                  </p>
-                </div>
+
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={simulationStage}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.25 }}
+                    className="my-1.5 min-h-[50px]"
+                  >
+                    {simulationStage === 0 && (
+                      <>
+                        <div className="text-xs font-bold text-red-600 dark:text-red-400">
+                          IndiGo Delay +4h Detected
+                        </div>
+                        <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-0.5">
+                          Downstream taxi transfer and fine-dining reservation invalidated by ripple delay.
+                        </p>
+                      </>
+                    )}
+                    {simulationStage === 1 && (
+                      <>
+                        <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                          Evaluating Optimal Pareto Path
+                        </div>
+                        <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-0.5">
+                          Searching temporal slack windows. Rebooking transport with zero penalty fees.
+                        </p>
+                      </>
+                    )}
+                    {simulationStage === 2 && (
+                      <>
+                        <div className="text-xs font-bold text-[var(--foreground)]">
+                          Schedule Rebalanced Seamlessly
+                        </div>
+                        <p className="text-[11px] text-[var(--text-secondary)] line-clamp-2 mt-0.5">
+                          Taxi rescheduled. Sunset dinner shifted to 20:30. Full itinerary restored.
+                        </p>
+                      </>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+
                 <div className="pt-3 border-t border-[var(--border)] flex justify-between text-[11px] text-[var(--text-secondary)]">
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">Saved: ₹3,500</span>
-                  <span className="font-mono text-[10px] text-[var(--text-tertiary)]">Confidence: 94%</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                    {simulationStage === 2 ? 'Saved: ₹3,500' : simulationStage === 1 ? 'Confidence: 98%' : 'Risk: High'}
+                  </span>
+                  <span className="font-mono text-[10px] text-[var(--text-tertiary)]">
+                    Autonomous Engine
+                  </span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>
@@ -420,8 +533,15 @@ export default function LandingPage() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-4 shadow-xs">
-            <Navigation className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> High-Resolution Google Satellite & Aerial Radar
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 mb-4 shadow-xs">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="font-mono text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">12 ORBITERS LOCKED</span>
+            <span className="text-slate-400">·</span>
+            <Navigation className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            <span>High-Resolution Google Satellite & Aerial Radar</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-[var(--foreground)]">
             Real-Time <span className="gradient-text">Geographic Telemetry</span>
@@ -431,8 +551,14 @@ export default function LandingPage() {
           </p>
         </motion.div>
 
-        {/* Live Satellite Map on Landing Page */}
-        <div className="glass-card p-3 sm:p-4 rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 max-w-5xl mx-auto">
+        {/* Live Satellite Map on Landing Page with Elevated Frame */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="glass-card p-3 sm:p-4 rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 dark:border-white/10 max-w-5xl mx-auto"
+        >
           <SatelliteMap
             points={previewMapPoints}
             selectedPointId={selectedPointId}
@@ -440,7 +566,7 @@ export default function LandingPage() {
             height="520px"
             title="Goa Luxury Travel Corridor — Live Satellite & Aerial Navigation"
           />
-        </div>
+        </motion.div>
       </section>
 
       {/* CURATED LUXURY DESTINATIONS SHOWCASE */}
@@ -461,7 +587,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/discover"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:gap-3 transition-all"
           >
             Explore all 12 Goa experiences <ArrowRight className="w-4 h-4" />
           </Link>
@@ -471,17 +597,18 @@ export default function LandingPage() {
           {destinationsShowcase.map((item, idx) => (
             <motion.div
               key={item.name}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="glass-card rounded-2xl overflow-hidden group shadow-md hover:shadow-xl border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1"
+              transition={{ delay: idx * 0.08, duration: 0.5 }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              className="glass-card rounded-2xl overflow-hidden group shadow-md hover:shadow-2xl border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 cursor-pointer"
             >
               <div className="h-44 relative overflow-hidden bg-slate-900">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop';
                   }}
@@ -508,7 +635,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* THREE SUPERPOWERS FEATURE GRID - With Clear Spacing */}
+      {/* THREE SUPERPOWERS FEATURE GRID - With Clear Spacing & Staggered Reveal */}
       <section id="features" className="relative z-10 container-custom py-28 sm:py-36 border-t border-[var(--border)]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -528,16 +655,19 @@ export default function LandingPage() {
           {features.map((feature, i) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="glass-card p-7 sm:p-8 rounded-2xl group transition-all duration-300 border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:-translate-y-1.5 shadow-md hover:shadow-xl"
+              transition={{ delay: i * 0.08, duration: 0.5 }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              className="glass-card p-7 sm:p-8 rounded-2xl group transition-all duration-300 border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 shadow-md hover:shadow-xl cursor-default"
             >
               <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300 border border-blue-200/80 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 shadow-sm dark:shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                 {feature.icon}
               </div>
-              <h3 className="text-base font-bold mb-2 text-[var(--foreground)]">{feature.title}</h3>
+              <h3 className="text-base font-bold mb-2 text-[var(--foreground)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {feature.title}
+              </h3>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                 {feature.description}
               </p>
