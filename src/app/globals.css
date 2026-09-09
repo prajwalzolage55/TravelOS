@@ -131,30 +131,30 @@ body {
   box-shadow: 0 0 20px var(--glow-danger), 0 0 40px rgba(239, 68, 68, 0.08);
 }
 
-/* Gradient Text - Refined Luxury Enterprise */
+/* Gradient Text - Vibrant & Visible */
 .gradient-text {
-  background: linear-gradient(135deg, #0f172a 20%, #1e40af 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .gradient-text {
-  background: linear-gradient(135deg, #f8fafc 20%, #93c5fd 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-warm {
-  background: linear-gradient(135deg, #0f172a 10%, #334155 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .gradient-text-warm {
-  background: linear-gradient(135deg, #ffffff 10%, #cbd5e1 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #22d3ee 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
