@@ -168,6 +168,34 @@ const destinationsShowcase = [
     cost: '₹3,500 / dinner',
     image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop',
   },
+  {
+    name: 'Mandovi Luxury Sunset Cruise',
+    area: 'Panjim Harbor',
+    tag: 'Private Catamaran',
+    cost: '₹2,200 / person',
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Sahakari Spice Farm & Feast',
+    area: 'Ponda Valley',
+    tag: 'Gastronomy & Nature',
+    cost: '₹800 / person',
+    image: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Cabo de Rama Fortress',
+    area: 'Canacona Cliff',
+    tag: 'Scenic Heritage',
+    cost: '₹600 / entry',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop',
+  },
+  {
+    name: 'Ashwem Beachfront Cabana',
+    area: 'North Goa Pristine Sands',
+    tag: 'Coastal Wellness',
+    cost: '₹14,500 / night',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600&auto=format&fit=crop',
+  },
 ];
 
 export default function LandingPage() {
@@ -569,13 +597,13 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* CURATED LUXURY DESTINATIONS SHOWCASE */}
-      <section id="destinations" className="relative z-10 container-custom py-28 sm:py-36 border-t border-[var(--border)]">
+      {/* CURATED LUXURY DESTINATIONS SHOWCASE - CONTINUOUS HORIZONTAL MARQUEE */}
+      <section id="destinations" className="relative z-10 py-28 sm:py-36 border-t border-[var(--border)] overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16"
+          className="container-custom flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
         >
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 mb-4 shadow-xs">
@@ -593,45 +621,48 @@ export default function LandingPage() {
           </Link>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {destinationsShowcase.map((item, idx) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08, duration: 0.5 }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className="glass-card rounded-2xl overflow-hidden group shadow-md hover:shadow-2xl border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 cursor-pointer"
-            >
-              <div className="h-44 relative overflow-hidden bg-slate-900">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-black/60 text-white backdrop-blur-md border border-white/20">
-                  {item.tag}
-                </span>
-                <span className="absolute bottom-3 left-3 text-xs font-bold text-white drop-shadow-sm">
-                  {item.cost}
-                </span>
+        {/* Continuous Horizontal Scrolling Track with Soft Edge Masks */}
+        <div className="relative w-full overflow-hidden">
+          {/* Edge Vignette Masks for Smooth Visual Fade */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none bg-gradient-to-r from-[var(--background)] to-transparent" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none bg-gradient-to-l from-[var(--background)] to-transparent" />
+
+          {/* Marquee Track with pause on hover */}
+          <div className="animate-infinite-scroll flex gap-6 px-4">
+            {[...destinationsShowcase, ...destinationsShowcase].map((item, idx) => (
+              <div
+                key={`${item.name}-${idx}`}
+                className="w-[280px] sm:w-[320px] flex-shrink-0 glass-card rounded-2xl overflow-hidden group shadow-md hover:shadow-2xl border border-slate-200/80 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-all duration-300 cursor-pointer"
+              >
+                <div className="h-44 relative overflow-hidden bg-slate-900">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=600&auto=format&fit=crop';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-black/60 text-white backdrop-blur-md border border-white/20">
+                    {item.tag}
+                  </span>
+                  <span className="absolute bottom-3 left-3 text-xs font-bold text-white drop-shadow-sm">
+                    {item.cost}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-sm line-clamp-1 text-[var(--foreground)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {item.name}
+                  </h3>
+                  <p className="text-xs text-[var(--text-secondary)] mt-1.5 flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                    {item.area}
+                  </p>
+                </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-bold text-sm line-clamp-1 text-[var(--foreground)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {item.name}
-                </h3>
-                <p className="text-xs text-[var(--text-secondary)] mt-1.5 flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                  {item.area}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
